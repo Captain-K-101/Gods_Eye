@@ -28,5 +28,5 @@ if not args.u.startswith('http'):
 
 url =str(args.u)
 check(url)
-scan(url)
+#scan(url)
 

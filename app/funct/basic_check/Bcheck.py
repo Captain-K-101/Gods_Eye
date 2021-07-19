@@ -16,7 +16,7 @@ def normal_check(k):
 
 def check(url):
     csp_flag=1
-    print("\n\t----------Server_Details-----------")
+    print("\n[+]----------Server_Details-----------")
     for i in range(0,3):
         God_request =all_fun(i,url)
         y=God_request.headers
@@ -37,35 +37,20 @@ def check(url):
     page_scanner(all_fun(0,url).content)
     
 
-def csp_checker(v):
-    print("\t-----------CSP-------------\t")
-    csp_arr=['default-src',' upgrade-insecure-requests','block-all-mixed-content','script-src','style-src','img-src','media-src','font-src','frame-src','object-src','child-src','worker-src','manifest-src']
-    csp=v.replace('; ',';').replace('/http',' http')
-    #print(re.findall('(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+', str(csp)))
-    csp=csp.split(';')
-    got_headers=[]
-    for i in csp[:-1]:
-        #print("\033[31m"+i.split(' ')[0]+":\033[32m"+(''.join(i.split(' ')[1:]))+"\033[0m")
-        csper(str(i.split(' ')[0]),(''.join(i.split(' ')[1:])))
-        got_headers.append(i.split(' ')[0])
-    a=list(set(csp_arr)-set(got_headers))
-    print("A Few CSP-Header's Not Found")
-    print(*a, sep = "\033[31m ")  
-    print("\033[0m")
 
 def all_fun(i,url):
     try:
         if i ==0:
-            print(colors.red+"--------GET------------"+colors.end)
+            print("[-]"+colors.red+"--------GET------------"+colors.end)
             return requests.get(url)
         elif i==1:
-            print(colors.red+"--------POST------------"+colors.end)
+            print("[-]"+colors.red+"--------POST------------"+colors.end)
             return requests.post(url,data={})
         elif i==2:
-            print(colors.red+"--------OPTIONS------------"+colors.end)
+            print("[-]"+colors.red+"--------OPTIONS------------"+colors.end)
             return requests.options(url)
         else:
-            print("none")
+            print("[+]"+"none")
             return []
     except:
-        exit("some error occured")
+        exit("|"+"some error occured")

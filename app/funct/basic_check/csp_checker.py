@@ -1,5 +1,22 @@
 from functools import partial
 
+def csp_checker(v):
+    print("\r\n\r\n[+] -----------CSP-------------\t")
+    csp_arr=['default-src',' upgrade-insecure-requests','block-all-mixed-content','script-src','style-src','img-src','media-src','font-src','frame-src','object-src','child-src','worker-src','manifest-src']
+    csp=v.replace('; ',';').replace('/http',' http')
+    #print(re.findall('(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+', str(csp)))
+    csp=csp.split(';')
+    got_headers=[]
+    for i in csp[:-1]:
+        #print("\033[31m"+i.split(' ')[0]+":\033[32m"+(''.join(i.split(' ')[1:]))+"\033[0m")
+        csper(str(i.split(' ')[0]),(''.join(i.split(' ')[1:])))
+        got_headers.append(i.split(' ')[0])
+    a=list(set(csp_arr)-set(got_headers))
+    print("  | A Few CSP-Header's Not Found")
+    print(*a, sep = "  |"+ "\033[31m ")  
+    print("  | \033[0m")
+
+
 def csper(csp,v):
     switcher = {
         'default-src': partial(default_src,v),
